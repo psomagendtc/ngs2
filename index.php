@@ -11,15 +11,16 @@
 		<script src="lib/jquery.cookie.js"></script>
 		<script src="lib/vue.js"></script>
 		<!-- <script src="lib/d3.js"></script> -->
+		<script src="com/mainframe.js"></script>
+		<script>const __coms=<?php $__coms=['login', 'list', 'report'];echo json_encode($__coms);?>;</script>
+		<?php foreach($__coms as $com){?><script src="com/<?php echo $com;?>.js"></script>
+		<?php }?>
 		<script src="index.js"></script>
 	</head>
 	<body>
-		<img src="src/logo.png"/>
-		<h2>Customer Report Drive</h2>
-		<div>
-			<div><label>Username: <input type="text" autofocus/></label></div>
-			<div><label>Password: <input type="password"/></label></div>
-			<button>Login</button>
+		<div id="view">
+			<mainframe></mainframe>
 		</div>
+		<div id="mask"></div>
 	</body>
 </html>

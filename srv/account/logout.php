@@ -1,0 +1,4 @@
+<?php
+logout();
+$output=true;
+?>
