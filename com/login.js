@@ -2,12 +2,23 @@ Vue.component("login", {
 template:
 	`<div class="login">
 		<maintop></maintop>
-		<h2>Customer Report Drive</h2>
-		<div class="dialog">
-			<div class="title">CUSTOMER LOGIN</div>
-			<div><label>Username: <input type="text" v-model.trim="id" autofocus ref="id" @keydown.enter="login"/></label></div>
-			<div><label>Password: <input type="password" v-model.trim="pw" ref="pw" @keydown.enter="login"/></label></div>
-			<button @click="login">Login</button>
+		<div class="background_wrap">
+			<img class="background" src="src/login_back.png"/>
+		</div>
+		<div class="dialog_wrap">
+			<div class="dialog">
+				<div class="title">CUSTOMER LOGIN</div>
+				<div class="input_wrap">
+					<input type="text" v-model.trim="id" autofocus ref="id" @keydown.enter="login" placeholder="User ID"/>
+					<img class="icon" src="src/id_icon.png"/>
+				</div><br/>
+				<div class="input_wrap">
+					<input type="password" v-model.trim="pw" ref="pw" @keydown.enter="login" placeholder="Password"/>
+					<img class="icon" src="src/pw_icon.png"/>
+				</div><br/>
+				<button @click="login">Login</button>
+				<div class="edge b1"></div><div class="edge b2"></div><div class="edge b3"></div><div class="edge b4"></div>
+			</div>
 		</div>
 		<mainbottom></mainbottom>
 	</div>`,

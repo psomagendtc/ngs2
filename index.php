@@ -3,6 +3,8 @@
 <html>
 	<head>
 		<title><?php echo htmlspecialchars(_CONFIGS('title'));?></title>
+		<meta name="viewport" content="width=device-width"/>
+		<meta name="viewport" content="initial-scale=1"/>
 		<link rel="icon" type="image/png" href="favicon.png"/>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto Sans">
 		<link rel="stylesheet" type="text/css" href="index.css"/>
