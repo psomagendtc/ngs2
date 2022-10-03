@@ -5,6 +5,10 @@ template:
 		<div class="background_wrap">
 			<img class="background" src="src/login_back.png"/>
 		</div>
+		<div class="title">
+			<h1>Psomagen NGS Service</h1>
+			<h2>Report and Result Delivery Drive</h2>
+		</div>
 		<div class="dialog_wrap">
 			<div class="dialog">
 				<div class="title">CUSTOMER LOGIN</div>
