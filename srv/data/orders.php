@@ -22,7 +22,6 @@ foreach(glob(userdir().'/*/OrderInfo.txt') as $OrderInfo_filename){
         }
         fclose($fp);
     }
-    $OrderInfo=file_get_contents();
     array_push($output, ['id'=>$Order_id, 'info'=>$Order_info]);
 }
 ?>
