@@ -45,7 +45,7 @@ html, body{width:100%;height:100%;padding:0;margin:0;position:relative;left:0;to
 .list .common td{text-align:left;color:#cccccc;}
 .list .projectlist{list-style:none;padding:10px;margin:0;}
 .list .projectlist h2 > span{color:#ffffffcc;font-weight:normal;margin-right:8px;}
-.list .samples{text-align:center;margin-bottom:32px;}
+.list .samples{text-align:center;margin-bottom:32px;width:100%;}
 .list .samples tr{background-color:#ffffff55;color:white;}
 .list .samples th, .list .samples td{padding:2px 5px;}
 .list .samples th{background-color:white;color:black;}

@@ -26,7 +26,7 @@ template:
 								<th>File list</th>
 							</tr>
 						</thead>
-						<tbody v-if="project.info.length+samples_extra[project.id]">
+						<tbody v-if="project.info.length+(project.id in samples_extra?samples_extra[project.id].length:0)">
 							<template v-for="row in project.info">
 								<tr v-if="files!==null&&project.id in files&&row.SampleID in files[project.id]">
 									<td v-for="x in fields" :class="x.id">{{row[x.id]}}</td>
@@ -149,7 +149,7 @@ methods:
 						}
 					});
 				});
-				return values.length?values.join(", "):"";
+				return values.length?values.join(", "):"-";
 			}else return "";
 		},
 		seelist:function(project, sample){
