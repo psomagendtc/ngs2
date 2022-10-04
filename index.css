@@ -25,19 +25,39 @@ html, body{width:100%;height:100%;padding:0;margin:0;position:relative;left:0;to
 .login > .dialog_wrap > .dialog > .b3{position:absolute;right:0;bottom:0;width:16px;height:1px;background-color:white;}
 .login > .dialog_wrap > .dialog > .b4{position:absolute;right:0;bottom:0;width:1px;height:16px;background-color:white;}
 
-.list{margin:0 1em;}
+.list{padding:0 1em;background-color:black;color:white;background:linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(22,22,66,1) 100%);}
+.list button:hover{opacity:0.9;cursor:pointer;}
+.list h2{color:#5efcff;}
+.list table{border-radius:1px;}
+.list > .top{display:flex;justify-content:space-between;align-items:flex-end;}
+.list > .top > img{height:30px;padding:10px;}
+.list > .top > button{width:100px;height:27px;background-color:white;color:black;border:none;border-radius:2px;margin:10px;font-size:1.1em;font-weight:bold;cursor:pointer;}
 .list > .content > .list{overflow-x:hidden;overflow-y:auto;}
-.list .common th{text-align:right;}
-.list .common td{text-align:left;}
-.list .samples{background-color:lightgray;text-align:center;margin-bottom:16px;}
-.list .samples tr{background-color:white;}
-.list .samples th, .list .samples td{padding:1px 3px;}
-.list .samples th{background-color:gray;color:white;}
-.list .samples tr.filelist{background-color:white;}
-.list .samples .nofiles{background-color:#eeeeee;color:#bbbbbb;}
-.list .samples tr.filelist li{text-align:left;}
-.list .samples tr.filelist .title{color:brown;text-decoration:none;}
-.list .samples tr.filelist .title .size{color:blue;}
+
+.list .common_wrap{display:inline-block;padding:8px 16px;position:relative;margin:32px 8px;}
+.list .common_wrap > h2{padding:0 0 0.5em 0;margin:0;color:white;}
+.list .common th{text-align:right;padding-right:5px;}
+.list .common_wrap > .bar{position:absolute;background-color:white;}
+.list .common_wrap > .c1{left:0px;top:0px;width:16px;height:1px;}
+.list .common_wrap > .c2{left:0px;top:0px;width:1px;height:16px;}
+.list .common_wrap > .c3{right:0px;bottom:0px;width:16px;height:1px;}
+.list .common_wrap > .c4{right:0px;bottom:0px;width:1px;height:16px;}
+.list .common td{text-align:left;color:#cccccc;}
+.list .projectlist{list-style:none;padding:10px;margin:0;}
+.list .projectlist h2 > span{color:#ffffffcc;font-weight:normal;margin-right:8px;}
+.list .samples{text-align:center;margin-bottom:32px;}
+.list .samples tr{background-color:#ffffff55;color:white;}
+.list .samples th, .list .samples td{padding:2px 5px;}
+.list .samples th{background-color:white;color:black;}
+.list .samples tr.filelist{background-color:#ffffff11;}
+.list .samples .nofiles{color:#ffffffaa;}
+.list .samples tr.filelist ul{padding:0;margin:0;list-style:none;}
+.list .samples tr.filelist li{text-align:left;padding:4px 16px;margin:1px;cursor:pointer;border-radius:10px;}
+.list .samples tr.filelist li:hover{background-color:#ffffff22;}
+.list .samples tr.filelist .title{color:pink;text-decoration:none;}
+.list .samples tr.filelist .title .size{color:skyblue;margin-left:8px;}
+.list .samples tr.filelist li button{margin:0 3px;}
+.list .samples td.SampleID{font-weight:bold;color:lime;}
 
 @media only screen and (max-width: 800px){
 	.login > .title{left:0;width:100%;}

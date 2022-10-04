@@ -1,19 +1,24 @@
 Vue.component("list", {
 template:
 	`<div class="list">
-		<div><button @click="logout">Logout</button></div>
+		<div class="top">
+			<img class="icon" src="src/logo_w.png"/>
+			<button @click="logout">Logout</button>
+		</div>
 		<div class="content">
-			<h2>Customer</h2>
-			<table class="common">
-				<tbody>
-					<tr><th>Institute</th><td>{{Institute}}</td></tr>
-					<tr><th>Customer</th><td>{{Customer}}</td></tr>
-				</tbody>
-			</table>
-			<h2>Project List</h2>
-			<ul class="list" ref="list">
+			<div class="common_wrap">
+				<h2>Customer</h2>
+				<table class="common">
+					<tbody>
+						<tr><th>Institute</th><td>{{Institute}}</td></tr>
+						<tr><th>Customer</th><td>{{Customer}}</td></tr>
+					</tbody>
+				</table>
+				<div class="bar c1"></div><div class="bar c2"></div><div class="bar c3"></div><div class="bar c4"></div>
+			</div>
+			<ul class="projectlist" ref="list">
 				<li v-for="project in orders">
-					<h3>Project: {{project.id}}</h3>
+					<h2><span>Project</span>{{project.id}}</h2>
 					<table class="samples" cellspacing="1">
 						<thead>
 							<tr>
@@ -24,7 +29,7 @@ template:
 						<tbody v-if="project.info.length+samples_extra[project.id]">
 							<template v-for="row in project.info">
 								<tr v-if="files!==null&&project.id in files&&row.SampleID in files[project.id]">
-									<td v-for="x in fields">{{row[x.id]}}</td>
+									<td v-for="x in fields" :class="x.id">{{row[x.id]}}</td>
 									<td class="seefiles">
 										<button @click="hidelist(project.id, row.SampleID)" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">△ Hide list</button>
 										<button @click="seelist(project.id, row.SampleID)" v-else>🔽 Show list</button>
@@ -34,7 +39,7 @@ template:
 									<td :colspan="fields.length+1">
 										<ul>
 											<li v-for="x in filelist[project.id][row.SampleID]">
-												<span class="title">{{x.name}} <span class="size">({{number_format(x.size)+" byte"+(x.size>1?"s":"")}})</span></span>
+												<span class="title">{{x.name}}<span class="size">({{number_format(x.size)+" byte"+(x.size>1?"s":"")}})</span></span>
 												<a :href="urlroot+'/download?project='+encodeURIComponent(project.id)+'&sample='+encodeURIComponent(row.SampleID)+'&file='+encodeURIComponent(x.name)"><button>Download</button></a>
 												<button @click="copytoclip(project.id, row.SampleID, x.name)">Copy a single-use link to clipboard</button>
 											</li>
@@ -44,7 +49,7 @@ template:
 							</template>
 							<template v-for="row in samples_extra[project.id]" v-if="project.id in samples_extra">
 								<tr>
-									<td v-for="x in fields">{{x.id in row?row[x.id]:""}}</td>
+									<td v-for="x in fields" :class="x.id">{{x.id in row?row[x.id]:""}}</td>
 									<td class="seefiles">
 										<button @click="hidelist(project.id, row.SampleID)" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">△ Hide list</button>
 										<button @click="seelist(project.id, row.SampleID)" v-else>🔽 Show list</button>
@@ -54,7 +59,7 @@ template:
 									<td :colspan="fields.length+1">
 										<ul>
 											<li v-for="x in filelist[project.id][row.SampleID]">
-												<span class="title">{{x.name}} <span class="size">({{number_format(x.size)+" byte"+(x.size>1?"s":"")}})</span></span>
+												<span class="title">{{x.name}}<span class="size">({{number_format(x.size)+" byte"+(x.size>1?"s":"")}})</span></span>
 												<a :href="urlroot+'/download?project='+encodeURIComponent(project.id)+'&sample='+encodeURIComponent(row.SampleID)+'&file='+encodeURIComponent(x.name)"><button>Download</button></a>
 												<button @click="copytoclip(project.id, row.SampleID, x.name)">Copy a single-use link to clipboard</button>
 											</li>
