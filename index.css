@@ -25,14 +25,19 @@ html, body{width:100%;height:100%;padding:0;margin:0;position:relative;left:0;to
 .login > .dialog_wrap > .dialog > .b3{position:absolute;right:0;bottom:0;width:16px;height:1px;background-color:white;}
 .login > .dialog_wrap > .dialog > .b4{position:absolute;right:0;bottom:0;width:1px;height:16px;background-color:white;}
 
+.list{margin:0 1em;}
 .list > .content > .list{overflow-x:hidden;overflow-y:auto;}
+.list .common th{text-align:right;}
+.list .common td{text-align:left;}
 .list .samples{background-color:lightgray;text-align:center;margin-bottom:16px;}
 .list .samples tr{background-color:white;}
 .list .samples th, .list .samples td{padding:1px 3px;}
 .list .samples th{background-color:gray;color:white;}
 .list .samples tr.filelist{background-color:white;}
 .list .samples .nofiles{background-color:#eeeeee;color:#bbbbbb;}
-
+.list .samples tr.filelist li{text-align:left;}
+.list .samples tr.filelist .title{color:brown;text-decoration:none;}
+.list .samples tr.filelist .title .size{color:blue;}
 
 @media only screen and (max-width: 800px){
 	.login > .title{left:0;width:100%;}

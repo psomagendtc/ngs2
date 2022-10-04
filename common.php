@@ -11,4 +11,8 @@ function _CONFIGS($key=null){
 	}
 	return $__CONFIGS;
 }
+function error($text='Internal Server Error', $code=500){
+    header('HTTP/1.0 '.$code.' '.$text);
+    exit();
+}
 ?>

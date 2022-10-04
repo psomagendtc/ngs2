@@ -3,7 +3,7 @@ template:
 	`<div class="list">
 		<div><button @click="logout">Logout</button></div>
 		<div class="content">
-			<h2>Customer Information</h2>
+			<h2>Customer</h2>
 			<table class="common">
 				<tbody>
 					<tr><th>Institute</th><td>{{Institute}}</td></tr>
@@ -26,28 +26,44 @@ template:
 								<tr v-if="files!==null&&project.id in files&&row.SampleID in files[project.id]">
 									<td v-for="x in fields">{{row[x.id]}}</td>
 									<td class="seefiles">
-										<button @click="hidelist(project.id, row.SampleID)" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">❌ Hide list</button>
+										<button @click="hidelist(project.id, row.SampleID)" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">△ Hide list</button>
 										<button @click="seelist(project.id, row.SampleID)" v-else>🔽 Show list</button>
 									</td>
 								</tr>
 								<tr class="filelist" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">
-									<td :colspan="fields.length+1">-</td>
+									<td :colspan="fields.length+1">
+										<ul>
+											<li v-for="x in filelist[project.id][row.SampleID]">
+												<span class="title">{{x.name}} <span class="size">({{number_format(x.size)+" byte"+(x.size>1?"s":"")}})</span></span>
+												<a :href="urlroot+'/download?project='+encodeURIComponent(project.id)+'&sample='+encodeURIComponent(row.SampleID)+'&file='+encodeURIComponent(x.name)"><button>Download</button></a>
+												<button @click="copytoclip(project.id, row.SampleID, x.name)">Copy a single-use link to clipboard</button>
+											</li>
+										</ul>
+									</td>
 								</tr>
 							</template>
 							<template v-for="row in samples_extra[project.id]" v-if="project.id in samples_extra">
 								<tr>
 									<td v-for="x in fields">{{x.id in row?row[x.id]:""}}</td>
 									<td class="seefiles">
-										<button @click="hidelist(project.id, row.SampleID)" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">❌ Hide list</button>
+										<button @click="hidelist(project.id, row.SampleID)" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">△ Hide list</button>
 										<button @click="seelist(project.id, row.SampleID)" v-else>🔽 Show list</button>
 									</td>
 								</tr>
 								<tr class="filelist" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">
-									<td :colspan="fields.length+1">-</td>
+									<td :colspan="fields.length+1">
+										<ul>
+											<li v-for="x in filelist[project.id][row.SampleID]">
+												<span class="title">{{x.name}} <span class="size">({{number_format(x.size)+" byte"+(x.size>1?"s":"")}})</span></span>
+												<a :href="urlroot+'/download?project='+encodeURIComponent(project.id)+'&sample='+encodeURIComponent(row.SampleID)+'&file='+encodeURIComponent(x.name)"><button>Download</button></a>
+												<button @click="copytoclip(project.id, row.SampleID, x.name)">Copy a single-use link to clipboard</button>
+											</li>
+										</ul>
+									</td>
 								</tr>
 							</template>
 						</tbody>
-						<tbody v-else><tr><td :colspan="fields.length+1" class="nofiles">No files</td></tr></tbody>
+						<tbody v-else><tr><td :colspan="fields.length+1" class="nofiles">No file</td></tr></tbody>
 					</table>
 				</li>
 			</ul>
@@ -56,6 +72,7 @@ template:
 data:
 	function(){
 		return {
+			urlroot,
 			orders:null,
 			files:null,
 			filelist:{},
@@ -135,18 +152,37 @@ methods:
 			if(!(project in filelist)){
 				filelist[project]={};
 			}
-			filelist[project][sample]=true;
+			filelist[project][sample]=null;
 			this.filelist=filelist;
+			call("data/filelist", {project, sample}, x=>{
+				var filelist=JSON.parse(JSON.stringify(this.filelist));
+				filelist[project][sample]=x;
+				this.filelist=filelist;
+			});
 		},
 		hidelist:function(project, sample){
 			var filelist=JSON.parse(JSON.stringify(this.filelist));
 			delete filelist[project][sample];
 			this.filelist=filelist;
 		},
+		copytoclip:function(project, sample, file){
+			mask(true);
+			call("data/makelink", {project, sample, file}, (x)=>{
+				if(x!==undefined&&"link" in x){
+					navigator.clipboard.writeText(urlroot+"/download?id="+x.link+"."+file);
+				}else{
+					alert("ERROR: Inappropriate Attempt");
+				}
+				mask(false);
+			});
+		},
 		resize:function(){
 			const list=this.$refs.list;
 			const h=$(window).height()-$(list).offset().top;
 			$(list).height(h);
+		},
+		number_format:function(x){
+			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		}
 	},
 created:

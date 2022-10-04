@@ -1,9 +1,6 @@
 <?php
 session_start();
 require('../common.php');
-function error($text='Internal Server Error', $code=500){
-    header('HTTP/1.0 '.$code.' '.$text);
-}
 function userdir($user=null){
     if($user===null){
         if(isset($_SESSION['user'])){
