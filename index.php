@@ -14,7 +14,7 @@
 		<script src="lib/vue.js"></script>
 		<!-- <script src="lib/d3.js"></script> -->
 		<script src="com/mainframe.js"></script>
-		<script>const __coms=<?php $__coms=['login', 'list', 'report'];echo json_encode($__coms);?>;</script>
+		<script>const __coms=<?php $__coms=explode(',', 'login,list,report');echo json_encode($__coms);?>;</script>
 		<?php foreach($__coms as $com){?><script src="com/<?php echo $com;?>.js"></script>
 		<?php }?>
 		<script src="index.js"></script>
