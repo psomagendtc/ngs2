@@ -179,7 +179,7 @@ methods:
 					var textarea=this.$refs.textarea;
 					textarea.value=link;
 					textarea.select();
-					textarea.setSelectionRange(0, 99999);
+					textarea.setSelectionRange(0, 999999);
 					document.execCommand("copy");
 					textarea.setSelectionRange(0, 0);
 				}else{
