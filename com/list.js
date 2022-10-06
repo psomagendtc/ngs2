@@ -26,7 +26,7 @@ template:
 								<th>File list</th>
 							</tr>
 						</thead>
-						<tbody v-if="project.info.length+(project.id in samples_extra?samples_extra[project.id].length:0)">
+						<tbody v-if="project.info.filter(x=>files!==null&&project.id in files&&x.SampleID in files[project.id]).length+(project.id in samples_extra?samples_extra[project.id].length:0)">
 							<template v-for="row in project.info">
 								<tr v-if="files!==null&&project.id in files&&row.SampleID in files[project.id]">
 									<td v-for="x in fields" :class="x.id">{{row[x.id]}}</td>
@@ -70,6 +70,11 @@ template:
 						</tbody>
 						<tbody v-else><tr><td :colspan="fields.length+1" class="nofiles">No file</td></tr></tbody>
 					</table>
+					<template v-if="project.info.filter(x=>files!==null&&project.id in files&&x.SampleID in files[project.id]).length+(project.id in samples_extra?samples_extra[project.id].length:0)">
+						<button @click="wgets(project.id)">Linux wget commands</button> <button v-if="project.id in wgets_buffer" @click="copytoclip2(wgets_buffer[project.id])">Copy to clipboard</button>
+						<textarea class="wgetsbuffer" v-if="project.id in wgets_buffer" :value="wgets_buffer[project.id]" readonly></textarea>
+						<div class="endofproject"></div>
+					</template>
 				</li>
 			</ul>
 		</div>
@@ -86,7 +91,8 @@ data:
 				{title:"Platform", id:"Platform"}, {title:"Species", id:"Species"}, {title:"Application", id:"ApplicationType"},
 				{title:"Type", id:"SampleType"}, {title:"Run type", id:"RunningType"}, {title:"Run scale", id:"RunScale"}
 			],
-			resize_t:null
+			resize_t:null,
+			wgets_buffer:{}
 		};
 	},
 computed:
@@ -181,6 +187,10 @@ methods:
 				mask(false);
 			});
 		},
+		copytoclip2:function(text){
+			mask(true);
+			navigator.clipboard.writeText(urlroot+"/download?id="+x.link+"."+file);
+		},
 		resize:function(){
 			const list=this.$refs.list;
 			const h=$(window).height()-$(list).offset().top;
@@ -188,6 +198,19 @@ methods:
 		},
 		number_format:function(x){
 			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		},
+		wgets:function(project_id){
+			if(!(project_id in this.wgets_buffer)){
+				call("data/wgets", {project_id}, (x)=>{
+					var wgets_buffer=JSON.parse(JSON.stringify(this.wgets_buffer));
+					wgets_buffer[project_id]=x.join("\n");
+					this.wgets_buffer=wgets_buffer;
+				});
+			}else{
+				var wgets_buffer=JSON.parse(JSON.stringify(this.wgets_buffer));
+				delete wgets_buffer[project_id];
+				this.wgets_buffer=wgets_buffer;
+			}
 		}
 	},
 created:

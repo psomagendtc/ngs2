@@ -33,7 +33,6 @@ html, body{width:100%;height:100%;padding:0;margin:0;position:relative;left:0;to
 .list > .top > img{height:30px;padding:10px;}
 .list > .top > button{width:100px;height:27px;background-color:white;color:black;border:none;border-radius:2px;margin:10px;font-size:1.1em;font-weight:bold;cursor:pointer;}
 .list > .content > .list{overflow-x:hidden;overflow-y:auto;}
-
 .list .common_wrap{display:inline-block;padding:8px 16px;position:relative;margin:32px 8px;}
 .list .common_wrap > h2{padding:0 0 0.5em 0;margin:0;color:white;}
 .list .common th{text-align:right;padding-right:5px;}
@@ -43,9 +42,9 @@ html, body{width:100%;height:100%;padding:0;margin:0;position:relative;left:0;to
 .list .common_wrap > .c3{right:0px;bottom:0px;width:16px;height:1px;}
 .list .common_wrap > .c4{right:0px;bottom:0px;width:1px;height:16px;}
 .list .common td{text-align:left;color:#cccccc;}
-.list .projectlist{list-style:none;padding:10px;margin:0;}
+.list .projectlist{list-style:none;padding:10px;margin:0;overflow:auto;}
 .list .projectlist h2 > span{color:#ffffffcc;font-weight:normal;margin-right:8px;}
-.list .samples{text-align:center;margin-bottom:32px;width:100%;}
+.list .samples{text-align:center;margin-bottom:5px;width:100%;}
 .list .samples tr{background-color:#ffffff55;color:white;}
 .list .samples th, .list .samples td{padding:2px 5px;}
 .list .samples th{background-color:white;color:black;}
@@ -58,6 +57,8 @@ html, body{width:100%;height:100%;padding:0;margin:0;position:relative;left:0;to
 .list .samples tr.filelist .title .size{color:skyblue;margin-left:8px;}
 .list .samples tr.filelist li button{margin:0 3px;}
 .list .samples td.SampleID{font-weight:bold;color:lime;}
+.list .wgetsbuffer{width:100%;height:88px;resize:none;}
+.list .endofproject{margin-bottom:35px;}
 
 @media only screen and (max-width: 800px){
 	.login > .title{left:0;width:100%;}
