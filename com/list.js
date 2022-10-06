@@ -32,7 +32,7 @@ template:
 								<tr v-if="files!==null&&project.id in files&&row.SampleID in files[project.id]">
 									<td v-for="x in fields" :class="x.id">{{row[x.id]}}</td>
 									<td class="seefiles">
-										<button @click="hidelist(project.id, row.SampleID)" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">△ Hide list</button>
+										<button @click="hidelist(project.id, row.SampleID)" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">🔼 Hide list</button>
 										<button @click="seelist(project.id, row.SampleID)" v-else>🔽 Show list</button>
 									</td>
 								</tr>
@@ -52,7 +52,7 @@ template:
 								<tr>
 									<td v-for="x in fields" :class="x.id">{{x.id in row?row[x.id]:""}}</td>
 									<td class="seefiles">
-										<button @click="hidelist(project.id, row.SampleID)" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">△ Hide list</button>
+										<button @click="hidelist(project.id, row.SampleID)" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">🔼 Hide list</button>
 										<button @click="seelist(project.id, row.SampleID)" v-else>🔽 Show list</button>
 									</td>
 								</tr>
@@ -195,8 +195,12 @@ methods:
 			});
 		},
 		copytoclip2:function(text){
-			mask(true);
-			navigator.clipboard.writeText(urlroot+"/download?id="+x.link+"."+file);
+			var textarea=this.$refs.textarea;
+			textarea.value=text;
+			textarea.select();
+			textarea.setSelectionRange(0, 999999);
+			document.execCommand("copy");
+			textarea.setSelectionRange(0, 0);
 		},
 		resize:function(){
 			const list=this.$refs.list;
