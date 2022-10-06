@@ -1,6 +1,7 @@
 Vue.component("list", {
 template:
 	`<div class="list">
+		<textarea style="width:1px;height:1px;padding:0;margin:0;position:fixed;right:0px;bottom:0px;border:none;color:transparent;background-color:transparent;" tabindex="-1" ref="textarea"></textarea>
 		<div class="top">
 			<img class="icon" src="src/logo_w.png"/>
 			<button @click="logout">Logout</button>
@@ -180,7 +181,13 @@ methods:
 			mask(true);
 			call("data/makelink", {project, sample, file}, (x)=>{
 				if(x!==undefined&&"link" in x){
-					navigator.clipboard.writeText(urlroot+"/download?id="+x.link+"."+file);
+					const link=urlroot+"/download?id="+x.link+"."+file;
+					var textarea=this.$refs.textarea;
+					textarea.value=link;
+					textarea.select();
+					textarea.setSelectionRange(0, 999999);
+					document.execCommand("copy");
+					textarea.setSelectionRange(0, 0);
 				}else{
 					alert("ERROR: Inappropriate Attempt");
 				}
