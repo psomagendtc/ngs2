@@ -41,9 +41,9 @@ template:
 										<ul>
 											<li v-for="x in filelist[project.id][row.SampleID]">
 												<span class="title">{{x.name}}<span class="size">{{number_format(x.size)}}</span></span>
-												<a :href="urlroot+'/download?project='+encodeURIComponent(project.id)+'&sample='+encodeURIComponent(row.SampleID)+'&file='+encodeURIComponent(x.name)"><button>Download</button></a>
-												<button @click="copytoclip(project.id, row.SampleID, x.name)" title="Copy a single-use link to clipboard">📋 single-use link</button>
-												<button @click="copytoclip3(project.id, row.SampleID, x.name)" title="Copy a wget command to clipboard">📋 wget command</button>
+												<a :href="urlroot+'/download?project='+encodeURIComponent(project.id)+'&sample='+encodeURIComponent(row.SampleID)+'&file='+encodeURIComponent(x.name)"><button>💾Download</button></a>
+												<button @click="copytoclip(project.id, row.SampleID, x.name)" title="Copy a single-use link to clipboard">📋single-use link</button>
+												<button @click="copytoclip3(project.id, row.SampleID, x.name)" title="Copy a wget command to clipboard">📋wget command</button>
 											</li>
 										</ul>
 									</td>
@@ -62,9 +62,9 @@ template:
 										<ul>
 											<li v-for="x in filelist[project.id][row.SampleID]">
 												<span class="title">{{x.name}}<span class="size">{{number_format(x.size)}}</span></span>
-												<a :href="urlroot+'/download?project='+encodeURIComponent(project.id)+'&sample='+encodeURIComponent(row.SampleID)+'&file='+encodeURIComponent(x.name)"><button>Download</button></a>
-												<button @click="copytoclip(project.id, row.SampleID, x.name)" title="Copy a single-use link to clipboard">📋 single-use link</button>
-												<button @click="copytoclip3(project.id, row.SampleID, x.name)" title="Copy a wget command to clipboard">📋 wget command</button>
+												<a :href="urlroot+'/download?project='+encodeURIComponent(project.id)+'&sample='+encodeURIComponent(row.SampleID)+'&file='+encodeURIComponent(x.name)"><button>💾Download</button></a>
+												<button @click="copytoclip(project.id, row.SampleID, x.name)" title="Copy a single-use link to clipboard">📋single-use link</button>
+												<button @click="copytoclip3(project.id, row.SampleID, x.name)" title="Copy a wget command to clipboard">📋wget command</button>
 											</li>
 										</ul>
 									</td>
