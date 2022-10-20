@@ -30,7 +30,7 @@ template:
 						<tbody v-if="project.info.filter(x=>files!==null&&project.id in files&&x.SampleID in files[project.id]).length+(project.id in samples_extra?samples_extra[project.id].length:0)">
 							<template v-for="row in project.info">
 								<tr v-if="files!==null&&project.id in files&&row.SampleID in files[project.id]">
-									<td v-for="x in fields" :class="x.id">{{row[x.id]}}</td>
+									<td v-for="x in fields" :class="x.id" @click="(project.id in filelist&&row.SampleID in filelist[project.id]?hidelist:seelist)(project.id, row.SampleID)">{{row[x.id]}}</td>
 									<td class="seefiles">
 										<button @click="hidelist(project.id, row.SampleID)" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">🔼 Hide list</button>
 										<button @click="seelist(project.id, row.SampleID)" v-else>🔽 Show list</button>
@@ -50,7 +50,7 @@ template:
 							</template>
 							<template v-for="row in samples_extra[project.id]" v-if="project.id in samples_extra">
 								<tr>
-									<td v-for="x in fields" :class="x.id">{{x.id in row?row[x.id]:""}}</td>
+									<td v-for="x in fields" :class="x.id" @click="(project.id in filelist&&row.SampleID in filelist[project.id]?hidelist:seelist)(project.id, row.SampleID)">{{x.id in row?row[x.id]:""}}</td>
 									<td class="seefiles">
 										<button @click="hidelist(project.id, row.SampleID)" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">🔼 Hide list</button>
 										<button @click="seelist(project.id, row.SampleID)" v-else>🔽 Show list</button>
