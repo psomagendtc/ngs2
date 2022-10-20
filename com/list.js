@@ -40,7 +40,7 @@ template:
 									<td :colspan="fields.length+1">
 										<ul>
 											<li v-for="x in filelist[project.id][row.SampleID]">
-												<span class="title">{{x.name}}<span class="size">({{number_format(x.size)}})</span></span>
+												<span class="title">{{x.name}}<span class="size">{{number_format(x.size)}}</span></span>
 												<a :href="urlroot+'/download?project='+encodeURIComponent(project.id)+'&sample='+encodeURIComponent(row.SampleID)+'&file='+encodeURIComponent(x.name)"><button>Download</button></a>
 												<button @click="copytoclip(project.id, row.SampleID, x.name)">Copy a single-use link to clipboard</button>
 											</li>
@@ -60,7 +60,7 @@ template:
 									<td :colspan="fields.length+1">
 										<ul>
 											<li v-for="x in filelist[project.id][row.SampleID]">
-												<span class="title">{{x.name}}<span class="size">({{number_format(x.size)}})</span></span>
+												<span class="title">{{x.name}}<span class="size">{{number_format(x.size)}}</span></span>
 												<a :href="urlroot+'/download?project='+encodeURIComponent(project.id)+'&sample='+encodeURIComponent(row.SampleID)+'&file='+encodeURIComponent(x.name)"><button>Download</button></a>
 												<button @click="copytoclip(project.id, row.SampleID, x.name)">Copy a single-use link to clipboard</button>
 											</li>
