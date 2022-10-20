@@ -42,7 +42,8 @@ template:
 											<li v-for="x in filelist[project.id][row.SampleID]">
 												<span class="title">{{x.name}}<span class="size">{{number_format(x.size)}}</span></span>
 												<a :href="urlroot+'/download?project='+encodeURIComponent(project.id)+'&sample='+encodeURIComponent(row.SampleID)+'&file='+encodeURIComponent(x.name)"><button>Download</button></a>
-												<button @click="copytoclip(project.id, row.SampleID, x.name)">Copy a single-use link to clipboard</button>
+												<button @click="copytoclip(project.id, row.SampleID, x.name)">Copy single-use link to clipboard</button>
+												<button @click="copytoclip3(project.id, row.SampleID, x.name)">Copy linux wget command to clipboard</button>
 											</li>
 										</ul>
 									</td>
@@ -62,7 +63,8 @@ template:
 											<li v-for="x in filelist[project.id][row.SampleID]">
 												<span class="title">{{x.name}}<span class="size">{{number_format(x.size)}}</span></span>
 												<a :href="urlroot+'/download?project='+encodeURIComponent(project.id)+'&sample='+encodeURIComponent(row.SampleID)+'&file='+encodeURIComponent(x.name)"><button>Download</button></a>
-												<button @click="copytoclip(project.id, row.SampleID, x.name)">Copy a single-use link to clipboard</button>
+												<button @click="copytoclip(project.id, row.SampleID, x.name)">Copy single-use link to clipboard</button>
+												<button @click="copytoclip3(project.id, row.SampleID, x.name)">Copy linux wget command to clipboard</button>
 											</li>
 										</ul>
 									</td>
@@ -201,6 +203,24 @@ methods:
 			textarea.setSelectionRange(0, 999999);
 			document.execCommand("copy");
 			textarea.setSelectionRange(0, 0);
+		},
+		copytoclip3:function(project, sample, file){
+			mask(true);
+			call("data/makelink", {project, sample, file}, (x)=>{
+				if(x!==undefined&&"link" in x){
+					const link=urlroot+"/download?id="+x.link+"."+file;
+					const command="wget '"+link+"' -O '"+sample+"_"+file+"'";
+					var textarea=this.$refs.textarea;
+					textarea.value=command;
+					textarea.select();
+					textarea.setSelectionRange(0, 999999);
+					document.execCommand("copy");
+					textarea.setSelectionRange(0, 0);
+				}else{
+					alert("ERROR: Inappropriate Attempt");
+				}
+				mask(false);
+			});
 		},
 		resize:function(){
 			const list=this.$refs.list;
