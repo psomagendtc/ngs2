@@ -40,7 +40,7 @@ template:
 									<td :colspan="fields.length+1">
 										<ul>
 											<li v-for="x in filelist[project.id][row.SampleID]">
-												<span class="title">{{x.name}}<span class="size">({{number_format(x.size)+" byte"+(x.size>1?"s":"")}})</span></span>
+												<span class="title">{{x.name}}<span class="size">({{number_format(x.size)}})</span></span>
 												<a :href="urlroot+'/download?project='+encodeURIComponent(project.id)+'&sample='+encodeURIComponent(row.SampleID)+'&file='+encodeURIComponent(x.name)"><button>Download</button></a>
 												<button @click="copytoclip(project.id, row.SampleID, x.name)">Copy a single-use link to clipboard</button>
 											</li>
@@ -60,7 +60,7 @@ template:
 									<td :colspan="fields.length+1">
 										<ul>
 											<li v-for="x in filelist[project.id][row.SampleID]">
-												<span class="title">{{x.name}}<span class="size">({{number_format(x.size)+" byte"+(x.size>1?"s":"")}})</span></span>
+												<span class="title">{{x.name}}<span class="size">({{number_format(x.size)}})</span></span>
 												<a :href="urlroot+'/download?project='+encodeURIComponent(project.id)+'&sample='+encodeURIComponent(row.SampleID)+'&file='+encodeURIComponent(x.name)"><button>Download</button></a>
 												<button @click="copytoclip(project.id, row.SampleID, x.name)">Copy a single-use link to clipboard</button>
 											</li>
@@ -208,7 +208,10 @@ methods:
 			$(list).height(h);
 		},
 		number_format:function(x){
-			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			var units=" KMGTPEZY", size=+x, i;
+			for(i=0;size/1024>1;size/=1024,i++);
+			return Math.round(size*10)/10+" "+(i>0?units[i]:"")+"B";
+			//return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		},
 		wgets:function(project_id){
 			if(!(project_id in this.wgets_buffer)){
