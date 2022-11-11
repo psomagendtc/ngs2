@@ -18,8 +18,8 @@ template:
 				<div class="bar c1"></div><div class="bar c2"></div><div class="bar c3"></div><div class="bar c4"></div>
 			</div>
 			<ul class="projectlist" ref="list">
-				<li v-for="project in orders">
-					<h2><span>Project</span>{{project.id}}</h2>
+				<li class="projectroot" v-for="project in orders">
+					<h2><span>Project</span>{{project.id}} <button @click="seeall($event.target)">⏬ See all list</button> <button @click="hideall($event.target)">⏫ Hide all list</button></h2>
 					<table class="samples" cellspacing="1">
 						<thead>
 							<tr>
@@ -32,8 +32,8 @@ template:
 								<tr v-if="files!==null&&project.id in files&&row.SampleID in files[project.id]">
 									<td v-for="x in fields" :class="x.id" @click="(project.id in filelist&&row.SampleID in filelist[project.id]?hidelist:seelist)(project.id, row.SampleID)">{{row[x.id]}}</td>
 									<td class="seefiles">
-										<button @click="hidelist(project.id, row.SampleID)" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">🔼 Hide list</button>
-										<button @click="seelist(project.id, row.SampleID)" v-else>🔽 Show list</button>
+										<button class="hide" @click="hidelist(project.id, row.SampleID)" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">🔼 Hide list</button>
+										<button class="see" @click="seelist(project.id, row.SampleID)" v-else>🔽 Show list</button>
 									</td>
 								</tr>
 								<tr class="filelist" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">
@@ -53,8 +53,8 @@ template:
 								<tr>
 									<td v-for="x in fields" :class="x.id" @click="(project.id in filelist&&row.SampleID in filelist[project.id]?hidelist:seelist)(project.id, row.SampleID)">{{x.id in row?row[x.id]:""}}</td>
 									<td class="seefiles">
-										<button @click="hidelist(project.id, row.SampleID)" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">🔼 Hide list</button>
-										<button @click="seelist(project.id, row.SampleID)" v-else>🔽 Show list</button>
+										<button class="hide" @click="hidelist(project.id, row.SampleID)" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">🔼 Hide list</button>
+										<button class="see" @click="seelist(project.id, row.SampleID)" v-else>🔽 Show list</button>
 									</td>
 								</tr>
 								<tr class="filelist" v-if="project.id in filelist&&row.SampleID in filelist[project.id]">
@@ -161,6 +161,12 @@ methods:
 				return values.length?values.join(", "):"-";
 			}else return "";
 		},
+		hideall:function(target){
+			$(target).parents(".projectroot").find(".hide").click();
+		},
+		seeall:function(target){
+			$(target).parents(".projectroot").find(".see").click();
+		},
 		seelist:function(project, sample){
 			var filelist=JSON.parse(JSON.stringify(this.filelist));
 			if(!(project in filelist)){
@@ -225,7 +231,7 @@ methods:
 		resize:function(){
 			const list=this.$refs.list;
 			const h=$(window).height()-$(list).offset().top;
-			$(list).height(h);
+			$(list).height(h-20);
 		},
 		number_format:function(x){
 			var units=" KMGTPEZY", size=+x, i;
