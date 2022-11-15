@@ -8,7 +8,7 @@ template:
 		</div>
 		<div class="content">
 			<div class="common_wrap">
-				<h2>Customer</h2>
+				<h2>Customer: {{id}}</h2>
 				<table class="common">
 					<tbody>
 						<tr><th>Institute</th><td>{{Institute}}</td></tr>
@@ -86,6 +86,7 @@ data:
 	function(){
 		return {
 			urlroot,
+			id:null,
 			orders:null,
 			files:null,
 			filelist:{},
@@ -137,6 +138,13 @@ methods:
 			}
 		},
 		list_load:function(){
+			call("account/id", undefined, ({id})=>{
+				if(id!==null){
+					this.id=id;
+				}else{
+					location.href=urlroot;
+				}
+			});
 			call("data/orders", undefined, (orders)=>{
 				this.orders=orders;
 				mask(false);
