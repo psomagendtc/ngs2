@@ -12,7 +12,7 @@
 			</p>
 			<h3>1.2. Service,</h3>
 			<p>
-				Service defines that it furnishes DNA sequencing and other additional information through <a href="https://ngs2.psomagen.com">https://ngs2.psomagen.com</a> to be provided by Psomagen, Inc. hereunder.
+				Service defines that it furnishes DNA sequencing and other additional information through <a href="https://order.psomagen.com">https://order.psomagen.com</a> and <a href="https://ngs2.psomagen.com">https://ngs2.psomagen.com</a> to be provided by Psomagen, Inc. hereunder.
 			</p>
 
 			<h3>1.3 Effectiveness and change of the agreement,</h3>
