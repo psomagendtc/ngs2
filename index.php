@@ -23,10 +23,10 @@
 		<div id="view">
 			<mainframe></mainframe>
 		</div>
-		<div style="position:absolute;left:20px;bottom:10px;color:white;">
+		<div style="position:fixed;left:20px;bottom:10px;color:white;opacity:0.7;">
 			<a href="//psomagen.com" style="font-size:20px;margin-right:15px;text-decoration:none;color:white;" target="_blank">Psomagen</a>1330 Piccard Dr Suite 103, Rockville, MD 20850
 		</div>
-		<div style="position:absolute;right:20px;bottom:10px;">
+		<div style="position:fixed;right:20px;bottom:10px;opacity:0.7;">
 			<a href="statement/termsandconditions.php" target="_blank" style="color:white;text-decoration:none;">Terms of Use</a>
 			<span style="padding:0 5px;"></span>
 			<a href="statement/privacypolicy.php" target="_blank" style="color:white;text-decoration:none;">Privacy Policy</a>
