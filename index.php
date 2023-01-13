@@ -23,6 +23,11 @@
 		<div id="view">
 			<mainframe></mainframe>
 		</div>
+		<div style="position:absolute;right:20px;bottom:10px;">
+			<a href="statement/termsandconditions.php" target="_blank" style="color:white;text-decoration:none;">Terms of Use</a>
+			<span style="padding:0 5px;"></span>
+			<a href="statement/privacypolicy.php" target="_blank" style="color:white;text-decoration:none;">Privacy Policy</a>
+		</div>
 		<div id="mask"></div>
 	</body>
 </html>
