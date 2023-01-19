@@ -43,7 +43,7 @@ header('Content-Length: '.$size);
 /*$info_list = explode("/", $filename); // MC
 $inserted_id = fetch_log_download(False, '', array_pop($info_list), array_pop($info_list), array_pop($info_list), $method); // MC*/
 ob_end_clean();
-flush();
 readfile($filename);
 /*fetch_log_download(True, $inserted_id);  // MC*/
+exit;
 ?>
