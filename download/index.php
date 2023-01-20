@@ -13,7 +13,7 @@ if(isset($_GET['project'])&&isset($_GET['sample'])&&isset($_GET['file'])){
     $file=$_GET['file'];
     if(isset($_SESSION['user'])){
         $userdataroot=_CONFIGS('dataroot').'/'.$_SESSION['user'];
-        $filename="{$userdataroot}/{$project}/{$sample}/{$file}";
+        $filename=realpath("{$userdataroot}/{$project}/{$sample}/{$file}");
         if(MC_log){//MC
             $method = 'download';
         }
@@ -37,7 +37,10 @@ if(isset($_GET['project'])&&isset($_GET['sample'])&&isset($_GET['file'])){
 $name=basename($filename);
 $size=filesize($filename);
 $quoted=sprintf('"%s"', addcslashes(basename($name), '"\\'));
-header('Pragma: public');
+header('X-Sendfile: '.$filename);
+header('Content-Type: application/octet-stream');
+header('Content-Disposition: attachment; filename='.$quoted);
+/*header('Pragma: public');
 header('Expires: 0');
 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 header('Cache-Control: public');
@@ -58,6 +61,6 @@ if(MC_log){//MC
 }
 if($linkfilename!==null){
     unlink($linkfilename);
-}
+}*/
 exit;
 ?>
