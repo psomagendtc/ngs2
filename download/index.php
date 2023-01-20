@@ -3,6 +3,8 @@ session_start();
 require('../common.php');
 define('MC_log', 0);
 
+set_time_limit(0);
+ini_set('memory_limit', '1024M');
 $linkfilename=null;
 if(isset($_GET['project'])&&isset($_GET['sample'])&&isset($_GET['file'])){
 //Internal mode: unlimited download allowed
@@ -35,21 +37,23 @@ if(isset($_GET['project'])&&isset($_GET['sample'])&&isset($_GET['file'])){
 $name=basename($filename);
 $size=filesize($filename);
 $quoted=sprintf('"%s"', addcslashes(basename($name), '"\\'));
+header('Pragma: public');
+header('Expires: 0');
+header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+header('Cache-Control: public');
 header('Content-Description: File Transfer');
 header('Content-Type: application/octet-stream');
 header('Content-Disposition: attachment; filename='.$quoted);
-header('Content-Transfer-Encoding: binary');
-header('Connection: Keep-Alive');
-header('Expires: 0');
-header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('Pragma: public');
+header('Content-Transfer-Encoding: chunked');
 header('Content-Length: '.$size);
 if(MC_log){//MC
     $info_list = explode("/", $filename);
     $inserted_id = fetch_log_download(False, '', array_pop($info_list), array_pop($info_list), array_pop($info_list), $method);
 }
-ob_end_clean();
-readfile($filename);
+ob_clean();
+flush();
+@readfile($filename);
+ob_end_flush();
 if(MC_log){//MC
     fetch_log_download(True, $inserted_id);
 }
