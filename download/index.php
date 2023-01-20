@@ -50,10 +50,9 @@ if(MC_log){//MC
     $info_list = explode("/", $filename);
     $inserted_id = fetch_log_download(False, '', array_pop($info_list), array_pop($info_list), array_pop($info_list), $method);
 }
-ob_clean();
-flush();
-@readfile($filename);
+ob_clean();   
 ob_end_flush();
+@readfile($filename);
 if(MC_log){//MC
     fetch_log_download(True, $inserted_id);
 }
