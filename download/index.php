@@ -48,19 +48,19 @@ header('Content-Description: File Transfer');
 header('Content-Type: application/octet-stream');
 header('Content-Disposition: attachment; filename='.$quoted);
 header('Content-Transfer-Encoding: chunked');
-header('Content-Length: '.$size);
+header('Content-Length: '.$size);*/
 if(MC_log){//MC
     $info_list = explode("/", $filename);
     $inserted_id = fetch_log_download(False, '', array_pop($info_list), array_pop($info_list), array_pop($info_list), $method);
 }
-ob_clean();   
+/*ob_clean();   
 ob_end_flush();
-@readfile($filename);
+@readfile($filename);*/
 if(MC_log){//MC
     fetch_log_download(True, $inserted_id);
 }
 if($linkfilename!==null){
     unlink($linkfilename);
-}*/
+}
 exit;
 ?>
