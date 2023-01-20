@@ -4,7 +4,7 @@ require('../common.php');
 define('MC_log', 0);
 
 set_time_limit(0);
-ini_set('memory_limit', '1024M');
+ini_set('max_execution_time', 0);
 $linkfilename=null;
 if(isset($_GET['project'])&&isset($_GET['sample'])&&isset($_GET['file'])){
 //Internal mode: unlimited download allowed
