@@ -1,7 +1,7 @@
 <?php
 session_start();
 require('../common.php');
-define('MC_log', 0);
+define('MC_log', 1);
 
 set_time_limit(0);
 ini_set('max_execution_time', 0);

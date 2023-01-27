@@ -222,7 +222,7 @@ methods:
 			mask(true);
 			call("data/makelink", {project, sample, file}, (x)=>{
 				if(x!==undefined&&"link" in x){
-					const link=urlroot+"/download?id="+x.link+"."+file;
+					const link=urlroot+"/download?id="+x.link+"."+file+"&method=wget";
 					const command="wget '"+link+"' -O '"+sample+"_"+file+"'";
 					var textarea=this.$refs.textarea;
 					textarea.value=command;

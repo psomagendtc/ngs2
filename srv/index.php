@@ -1,4 +1,5 @@
 <?php
+// 120922 MC Added: added insert ftp_log login_log
 session_start();
 require('../common.php');
 function userdir($user=null){
@@ -21,8 +22,12 @@ function login($user, $password){
     }
     if(strlen($salt)==32&&strlen($hash)==128&&hash('sha512', $password.$salt)==$hash){
         $_SESSION['user']=$user;
+        fetch_log_login(true, $user); // MC
         return true;
-    }else error('invalid id/pw', 403);
+    }else {
+        fetch_log_login(false, $user, $password); // MC
+        error('invalid id/pw', 403);
+    }
 }
 function logout(){
     unset($_SESSION['user']);

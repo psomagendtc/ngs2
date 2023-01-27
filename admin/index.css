@@ -1,0 +1,121 @@
+*{font-family:"Noto Sans";}
+html, body{width:100%;height:100%;padding:0;margin:0;position:relative;left:0;top:0;font-size:14px;overflow:auto;background-color: black;}
+#mask{position:fixed;left:0;top:0;width:100%;height:100%;background-color:#0000007F;color:white;font-size:1.4em;display:flex;justify-content:center;align-items:center;cursor:wait;}
+
+.maintop{position:absolute;left:0;top:0;width:100%;height:50px;z-index:100;}
+.maintop > .inner{max-width:960px;margin:auto;}
+.maintop > .inner > .logo{height:30px;padding:10px;}
+
+.login{position:absolute;left:0;top:0;background-color:black;width:100%;height:100%;}
+.login > .background_wrap{position:absolute;width:100%;height:100%;left:0;top:0;display:flex;align-items:center;justify-content:flex-end;}
+.login > .title{position:absolute;height:85px;left:40%;bottom:75%;}
+.login > .title > h1{color:#5efcff;font-size:40px;font-weight:bolder;margin:0;padding:0;letter-spacing:-0.4px;}
+.login > .title > h2{color:white;font-size:22px;font-weight:bold;margin:0;padding:0;}
+.login > .background_wrap > .background{height:100%;max-height:496px;margin-right:-200px;}
+.login > .dialog_wrap{position:absolute;width:100%;height:100%;left:0;top:0;display:flex;align-items:center;justify-content:flex-start;}
+.login > .dialog_wrap > .dialog{position:relative;display:inline-block;padding:15px 20px;margin-left:160px;background-color:#0000007f;text-align:center;}
+.login > .dialog_wrap > .dialog > .title{font-size:1.5em;color:white;font-weight:normal;padding:0 0 10px 0;font-weight:bold;letter-spacing:1px;}
+.login > .dialog_wrap > .dialog > .input_wrap{position:relative;margin:3px 0;display:inline-block;}
+.login > .dialog_wrap > .dialog > .input_wrap > .icon{position:absolute;left:12px;top:6px;height:50%;padding-right:10px;border-right:1px solid white;}
+.login > .dialog_wrap > .dialog input{width:158px;height:23px;border:1px solid white;outline:none;background-color:transparent;padding:0 0 0 40px;margin:0;border-radius:2px;color:white;background-color:#0000007f;}
+.login > .dialog_wrap > .dialog button{width:200px;height:27px;background-color:white;color:black;border:none;border-radius:2px;margin:10px 0;font-size:1.1em;font-weight:bold;cursor:pointer;}
+.login > .dialog_wrap > .dialog button:hover{opacity:0.9;}
+.login > .dialog_wrap > .dialog button[disabled], .login > .dialog_wrap > .dialog button[disabled]:hover{opacity:1;color:gray;background-color:lightgray;cursor:not-allowed;}
+.login > .dialog_wrap > .dialog > .b1{position:absolute;left:0;top:0;width:16px;height:1px;background-color:white;}
+.login > .dialog_wrap > .dialog > .b2{position:absolute;left:0;top:0;width:1px;height:16px;background-color:white;}
+.login > .dialog_wrap > .dialog > .b3{position:absolute;right:0;bottom:0;width:16px;height:1px;background-color:white;}
+.login > .dialog_wrap > .dialog > .b4{position:absolute;right:0;bottom:0;width:1px;height:16px;background-color:white;}
+.login > .dialog_wrap > .dialog > .reset{color:white;text-align:center;cursor:pointer;}
+.login > .dialog_wrap > .dialog > .reset:hover{opacity:0.5;}
+.login > .dialog_wrap > .dialog > .errors{list-style:none;padding:0;margin:0;}
+.login > .dialog_wrap > .dialog > .errors > li{color:pink;padding:0;margin:0;text-align:left;}
+
+.list{padding:0 1em;background-color:black;color:white;background:linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(22,22,66,1) 100%);}
+.list button:hover{opacity:0.9;cursor:pointer;}
+.list h2{color:#5efcff;}
+.list table{border-radius:1px;}
+.list > .top{display:flex;justify-content:space-between;align-items:flex-end;}
+.list > .top > img{height:30px;padding:10px;}
+.list > .top > button{width:100px;height:27px;background-color:white;color:black;border:none;border-radius:2px;margin:10px;font-size:1.1em;font-weight:bold;cursor:pointer;}
+.list > .content > .list{overflow-x:hidden;overflow-y:auto;}
+.list .common_wrap{display:inline-block;padding:8px 16px;position:relative;margin:32px 8px;}
+.list .common_wrap > h2{padding:0 0 0.5em 0;margin:0;color:white;}
+.list .common th{text-align:right;padding-right:5px;}
+.list .common_wrap > .bar{position:absolute;background-color:white;}
+.list .common_wrap > .c1{left:0px;top:0px;width:16px;height:1px;}
+.list .common_wrap > .c2{left:0px;top:0px;width:1px;height:16px;}
+.list .common_wrap > .c3{right:0px;bottom:0px;width:16px;height:1px;}
+.list .common_wrap > .c4{right:0px;bottom:0px;width:1px;height:16px;}
+.list .common td{text-align:left;color:#cccccc;}
+.list .projectlist{list-style:none;padding:10px;margin:0;overflow:auto;}
+.list .projectlist h2 > span{color:#ffffffcc;font-weight:normal;margin-right:8px;}
+.list .samples{text-align:center;margin-bottom:5px;width:100%;}
+.list .samples tr{background-color:#ffffff55;color:white;}
+.list .samples tr:hover{background-color:#ffffff77;}
+.list .samples th, .list .samples td{padding:2px 5px;}
+.list .samples td{cursor:pointer;}
+.list .samples th{background-color:white;color:black;}
+.list .samples tr.filelist{background-color:#ffffff11;}
+.list .samples .nofiles{color:#ffffffaa;}
+.list .samples tr.filelist ul{padding:0;margin:0;list-style:none;}
+.list .samples tr.filelist li{text-align:left;padding:4px 16px;margin:1px;cursor:pointer;border-radius:10px;}
+.list .samples tr.filelist li:hover{background-color:#ffffff22;}
+.list .samples tr.filelist .title{color:pink;text-decoration:none;}
+.list .samples tr.filelist .title .size{color:skyblue;margin-left:8px;}
+.list .samples tr.filelist li button{margin:0 3px;}
+.list .samples td.SampleID{font-weight:bold;color:lime;}
+.list .wgetsbuffer{width:100%;height:88px;resize:none;}
+.list .endofproject{margin-bottom:35px;}
+
+/* Admin Page */
+.admin{padding:0 1em;background-color:black;color:white;}
+.list h2{padding:0 0 0.5em 0;margin:0;color:black;}
+.admin > .top{display:flex;justify-content:space-between;align-items:flex-end;}
+.admin > .top > img{height:30px;padding:10px;}
+.admin > .top > button{width:100px;height:27px;background-color:white;color:black;border:none;border-radius:2px;margin:10px;font-size:1.1em;font-weight:bold;}
+.admin > .top > button:hover{opacity:0.9;cursor:pointer;}
+.admin > .topic > .list{overflow-x:auto;overflow-y:auto;}
+.admin > .topic > h2{padding:0 0 0.3em 0;margin-left:50px;color:white;}
+
+/* Search Box */
+/* .admin > .search_box {padding-bottom: 10px;} */
+.admin > .search_box:after {display:block; content:''; clear:both;}
+.admin > .search_box table tr th:first-child {padding-right:9px; padding-left:50px;vertical-align:middle;}
+.admin > .search_box table tr th {padding-top:0px; padding-right:9px; padding-left:32px;vertical-align:middle;}
+.admin > .search_box table tr td {padding-top:0px; padding-right:20px; vertical-align:middle;}
+.admin > .search_box .dateCk {width:15px; text-align:center;}
+.admin > .search_box input[type="text"] {height:22px;}
+.admin > .search_box button {width:103px;height:27px;margin:0 0 0 0; padding:0 10px !important;font-size:1.1em;font-weight:bold;cursor:pointer;}
+.admin > .search_box .date_box {width:110px; height:28px; padding-left:10px; border-right:none; border-radius:3px 0 0 3px; line-height:28px; text-align: left; color: black; font-weight:bold}
+.admin > .search_box .date_box:hover {cursor:text;}
+.admin > .search_box span {display:inline-block; font-weight:bold; font-size:1.2em}
+.admin > .search_box span.sear2_tit {margin:0 5px 0 30px;}
+.admin > .search_box select {height:28px; margin-left:30px; margin-right:5px; padding:0 18px 0 10px; line-height:26px; font-weight:bold;cursor:pointer;}
+
+/* Table from MySQL */
+.admin > .content{padding: 0.5em 50px;}
+/* .admin > .content tr th:first-child {padding-right:9px; padding-left:50px; background-color:white; color:black;} */
+.admin > .content > .scroll > .table_summary{text-align:right; padding-right: 10px;}
+.admin > .content table{text-align:center; white-space:nowrap; min-width:100%;}
+.admin > .content table th{position: sticky; top:0px; text-align:center; padding:2px 5px; background-color:white; color:black;}
+.admin > .content table td{padding: 2px 6px;}
+
+
+.admin > .content > .scroll{overflow:auto;}
+
+/* Pagination */
+.admin > .page {text-align:center; padding: 1em 50px;}
+.active{color: red; font-weight: bold;}
+
+@media only screen and (max-width: 800px){
+	.login > .title{left:0;width:100%;}
+	.login > .title > * {text-align:center;}
+	.maintop > .inner{display:none;}
+	.login > .dialog_wrap > .dialog{width:100%;margin:0;}
+	.login > .dialog_wrap > .dialog > .edge{display:none;}
+}
+
+@media only screen and (max-width: 600px){
+	.login > .title > h1{font-size:32px;}
+	.login > .title > h2{display:none;}
+}

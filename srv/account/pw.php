@@ -11,7 +11,9 @@ if(file_exists($password_filename)){
         $command_filename=tempnam(_CONFIGS('dataroot').'/ngs2_password_reset_daemon_job', 'command_');
         unlink($command_filename);
         $command_filename.='.sh';
-        file_put_contents($command_filename, $command);
+        if (is_bool($input['reset']) && $input['reset']) { // MC
+            fetch_log_changepassword($id);
+        }
         $output=true;
     }
 }

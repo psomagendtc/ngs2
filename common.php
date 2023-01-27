@@ -1,5 +1,6 @@
 <?php
 define('dirroot', '/UUU/ngs2');
+require('ftp_log.php'); // MC
 $__CONFIGS=null;
 function _CONFIGS($key=null){
 	global $__CONFIGS;

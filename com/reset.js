@@ -43,7 +43,7 @@ methods:
 			if(this.pw1==""||this.errors.length)$(this.$refs.pw1).focus();
 			else{
 				mask(true);
-				call("account/pw", {u:this.u, token:this.token, pw:this.pw1}, (x)=>{
+				call("account/pw", {u:this.u, token:this.token, pw:this.pw1, reset:true}, (x)=>{
 					if(x===true)alert("Password Updated!");
 					else alert("ERROR: Invalid Access.");
 					location.href=urlroot;
