@@ -80,7 +80,7 @@ function __db_fetch(){
     if ($connection->connect_errno){
         return -2;
     }
-    mysqli_set_charset($connection, "utf8mb4");
+    mysqli_set_charset($connection, "utf8");
 
     $insert_id = execute_query($sql_query, $connection);    
 
