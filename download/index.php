@@ -31,7 +31,6 @@ if(isset($_GET['project'])&&isset($_GET['sample'])&&isset($_GET['file'])){
             $userAccountRaw=readlink($linkfilename);
             $userAccount=explode("/", $userAccountRaw);
             $userAccount=array_reverse($userAccount)[3];
-            fetch_log_login(True, $userAccountRaw);
             if (isset($_GET['method'])) {
                 $method = 'wget';
             } else $method = 'single-use';
