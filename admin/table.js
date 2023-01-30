@@ -30,7 +30,8 @@ new Vue({
                   <option v-for="type in searchTypes">{{ type }}</option>
                 </select>
                 <input type="text" v-model="searchField" minlength="3" pattern=".{3,}" @keyup.enter="search">
-                <button @click="search" type="button">Search</button>
+                <button @click="search" type="button" id="searchButton">Search</button>
+                <button @click="exportToCSV" id="exportButton">Export</button>
               </td>
             </tr>
           </tbody>
@@ -45,7 +46,7 @@ new Vue({
           <table>
             <thead>
               <tr>
-                <th v-for="head in tableHeads" class="table-head">{{ head }}</th>
+                <th v-for="head in tableHeads">{{ head }}</th>
               </tr>
             </thead>
             <tbody>
@@ -54,6 +55,7 @@ new Vue({
                 <td>{{ row.order_id }}</td>
                 <td>{{ row.sample_name }}</td>
                 <td>{{ row.file_name }}</td>
+                <td>{{ findFileType(row.file_name) }}</td>
                 <td>{{ row.start_timestamp }}</td>
                 <!-- <td>{{ row.finish_timestamp }}</td> -->
               </tr> 
@@ -77,7 +79,7 @@ new Vue({
         searchTypes: ['Order', 'Sample', 'File', 'User'],
         searchType: 'Order',
         searchField: '',
-        tableHeads: ['User', 'Order', 'Sample', 'File', 'Download Date'], //, 'Download Finish'],
+        tableHeads: ['User', 'Order', 'Sample', 'File', 'File Type', 'Download Date'], //, 'Download Finish'],
         currentPage: 1,
         totalPages: null,
         recordsPerPage: 28,
@@ -118,7 +120,6 @@ new Vue({
         try {
           totalRows = await (await fetch(`getlog.php?page=0&start=${start}&end=${end}&type=${type}&field=${field}`)).json();
           this.totalRows = totalRows[0].count;
-
         } catch (error) {
           // alert('Error')
           console.error(error);
@@ -144,7 +145,6 @@ new Vue({
       },
       logout() {
         if(call("account/logout")){
-          alert('hi');
           location.href=urlroot;
         }
       },
@@ -165,6 +165,36 @@ new Vue({
           this.fetchData(this.currentPage + 1, this.sDate, this.today, this.searchType, this.searchField);
         }
       },
+      findFileType(fileName) {
+        fileName = fileName.toLowerCase();
+        splitWords = fileName.split(".");
+        fileLen = splitWords.length
+
+        if (splitWords[fileLen-1] === 'sqs') {
+          return 'SQS';
+        } else if (splitWords[fileLen-1] === 'vcf') {
+          return 'VCF';
+        } else if (fileName.includes('fastqc')) {
+        // } else if (splitWords.includes('fastqc', fileLen-1) || splitWords.includes('fastqc', fileLen-2)) {
+          return 'FASTQC';
+        } else if (splitWords[fileLen-1] === 'fastq' || splitWords[fileLen-2] === 'fastq') {
+          return 'FASTQ';
+        } else if (fileName.includes('md5')) {
+        // } else if (splitWords.includes('md5', fileLen-1) || splitWords.includes('md5', fileLen-2)) {
+          return 'MD5';
+        } else if (fileName.includes('bam')) {
+          return 'BAM';
+        } else if (fileName.includes('stat') || fileName.includes('anno')) {
+          return 'STAT';
+        } else if (splitWords[fileLen-1] === 'tar') {
+          return 'TAR';
+        } else if (splitWords[fileLen-1] === 'zip') {
+          return 'ZIP';
+        } else if (splitWords[fileLen-1] === 'txt') {
+          return 'TXT';
+        } else {
+          return 'ETC';
+        }
       // searchDownloadNotFinished() {
       //   if (this.downloadNotFinished) {
       //     this.fetchData(this.currentPage, this.sDate, '', this.searchType, this.searchField)
@@ -172,7 +202,31 @@ new Vue({
       //     alert(downloadNotFinished)
       //     this.fetchData(this.currentPage, this.sDate, this.today, this.searchType, this.searchField)
       //   } 
-      // },
+      },
+      exportToCSV() {
+        csvData = this.convertToCSV(this.data)
+        blob = new Blob([csvData], {type: "text/csv"});
+        url = URL.createObjectURL(blob);
+        link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", `Exported FTP log Data ${this.date}.csv`);
+        link.click();
+      },
+      convertToCSV(jsonData) {
+        keys = Object.keys(jsonData[0]);
+        header = keys.join(",");
+        body = jsonData
+          .map(row => {
+            return keys
+              .map(key => {
+                cell = row[key];
+                return cell.includes(",") ? `"${cell}"` : cell;
+              })
+              .join(",");
+          })
+          .join("\n");
+        return `${header}\n${body}`;
+      },
 
     },
 });
