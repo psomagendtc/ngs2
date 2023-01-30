@@ -20,15 +20,17 @@ function fetch_log_changepassword($account) {
 }
 
 // fetch_log_download(1, 54) : When download is finished, add insert_id from the last query
-// fetch_log_download(0, '', 'AN00001234', 'TESTSAMPLE1', 'testfile.fastq.gz', ['download' | 'wget' | 'single-use']) : When download starts
-function fetch_log_download($finish, $insert_id=null, $filename=null, $sample=null, $order=null, $method=null) {
+// fetch_log_download(0, '', 'user@account', 'AN00001234', 'TESTSAMPLE1', 'testfile.fastq.gz', ['download' | 'wget' | 'single-use']) : When download starts
+function fetch_log_download($finish, $insert_id=null, $userAccount=null, $filename=null, $sample=null, $order=null, $method=null) {
     if ($finish) {
         $last_insert_index = __fetch_log('download finish', ['insert_id'=>$insert_id]);
     } else {
-        $last_insert_index = __fetch_log('download', ['filename'=>$filename, 'sample'=>$sample, 'order'=>$order, 'method'=>$method]);
+        $last_insert_index = __fetch_log('download', ['account'=>$userAccount, 'filename'=>$filename, 'sample'=>$sample, 'order'=>$order, 'method'=>$method]);
     }
     return $last_insert_index;
 } 
+
+
 
 /*
 Input Arguments:

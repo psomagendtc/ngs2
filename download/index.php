@@ -6,6 +6,7 @@ define('MC_log', 1);
 set_time_limit(0);
 ini_set('max_execution_time', 0);
 $linkfilename=null;
+$userAccount=null;
 if(isset($_GET['project'])&&isset($_GET['sample'])&&isset($_GET['file'])){
 //Internal mode: unlimited download allowed
     $project=$_GET['project'];
@@ -16,6 +17,7 @@ if(isset($_GET['project'])&&isset($_GET['sample'])&&isset($_GET['file'])){
         $filename=realpath("{$userdataroot}/{$project}/{$sample}/{$file}");
         if(MC_log){//MC
             $method = 'download';
+            $userAccount=$_SESSION['user'];
         }
     }else{
         error('Inappropriate Attempt', 403);
@@ -26,6 +28,10 @@ if(isset($_GET['project'])&&isset($_GET['sample'])&&isset($_GET['file'])){
     $linkfilename=_CONFIGS('linkroot').'/'.$id;
     if($filename=realpath($linkfilename)){
         if(MC_log){//MC
+            $userAccountRaw=readlink($linkfilename);
+            $userAccount=explode("/", $userAccountRaw);
+            $userAccount=array_reverse($userAccount)[3];
+            fetch_log_login(True, $userAccount);
             if (isset($_GET['method'])) {
                 $method = 'wget';
             } else $method = 'single-use';
@@ -51,7 +57,7 @@ header('Content-Transfer-Encoding: chunked');
 header('Content-Length: '.$size);*/
 if(MC_log){//MC
     $info_list = explode("/", $filename);
-    $inserted_id = fetch_log_download(False, '', array_pop($info_list), array_pop($info_list), array_pop($info_list), $method);
+    $inserted_id = fetch_log_download(False, '', $userAccount, array_pop($info_list), array_pop($info_list), array_pop($info_list), $method);
 }
 /*ob_clean();   
 ob_end_flush();
