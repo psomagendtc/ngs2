@@ -47,39 +47,41 @@ function execute_select_query_for_log($sql_query, $connection) {
     $log_data = array();
     
     while ($row = mysqli_fetch_assoc($result)) {
-        unset($row['finish_timestamp']);
-        $fileNameLower = strtolower($row['file_name']);
-        $splitWords = explode('.', $fileNameLower);
-        $fileLen = count($splitWords);
-        $fileType = null;
-        $fileTypePos = 4;
+        if (count($row) > 1) {
+            unset($row['finish_timestamp']);
+            $fileNameLower = strtolower($row['file_name']);
+            $splitWords = explode('.', $fileNameLower);
+            $fileLen = count($splitWords);
+            $fileType = null;
+            $fileTypePos = 4;
 
-        if ($splitWords[$fileLen-1] === 'sqs') {
-            $fileType =  'SQS';
-        } else if ($splitWords[$fileLen-1] === 'vcf') {
-            $fileType = 'VCF';
-        } else if (str_contains($fileNameLower, 'fastqc')) {
-          // } else if (splitWords.includes('fastqc', fileLen-1) || splitWords.includes('fastqc', fileLen-2)) {
-            $fileType = 'FASTQC';
-        } else if ($splitWords[$fileLen-1] === 'fastq' || $splitWords[$fileLen-2] === 'fastq') {
-            $fileType = 'FASTQ';
-        } else if (str_contains($fileNameLower, 'md5')) {
-          // } else if (splitWords.includes('md5', fileLen-1) || splitWords.includes('md5', fileLen-2)) {
-            $fileType = 'MD5';
-        } else if (str_contains($fileNameLower, 'bam')) {
-            $fileType = 'BAM';
-        } else if (str_contains($fileNameLower, 'stat') || str_contains($fileNameLower, 'anno')) {
-            $fileType = 'STAT';
-        } else if ($splitWords[$fileLen-1] === 'tar') {
-            $fileType = 'TAR';
-        } else if ($splitWords[$fileLen-1] === 'zip') {
-            $fileType = 'ZIP';
-        } else if ($splitWords[$fileLen-1] === 'txt') {
-            $fileType = 'TXT';
-        } else {
-            $fileType = 'ETC';
-        }
-        $row = array_merge(array_slice($row, 0, $fileTypePos), array('file_type' => $fileType), array_slice($row, $fileTypePos));
+            if ($splitWords[$fileLen-1] === 'sqs') {
+                $fileType =  'SQS';
+            } else if ($splitWords[$fileLen-1] === 'vcf') {
+                $fileType = 'VCF';
+            } else if (str_contains($fileNameLower, 'fastqc')) {
+            // } else if (splitWords.includes('fastqc', fileLen-1) || splitWords.includes('fastqc', fileLen-2)) {
+                $fileType = 'FASTQC';
+            } else if ($splitWords[$fileLen-1] === 'fastq' || $splitWords[$fileLen-2] === 'fastq') {
+                $fileType = 'FASTQ';
+            } else if (str_contains($fileNameLower, 'md5')) {
+            // } else if (splitWords.includes('md5', fileLen-1) || splitWords.includes('md5', fileLen-2)) {
+                $fileType = 'MD5';
+            } else if (str_contains($fileNameLower, 'bam')) {
+                $fileType = 'BAM';
+            } else if (str_contains($fileNameLower, 'stat') || str_contains($fileNameLower, 'anno')) {
+                $fileType = 'STAT';
+            } else if ($splitWords[$fileLen-1] === 'tar') {
+                $fileType = 'TAR';
+            } else if ($splitWords[$fileLen-1] === 'zip') {
+                $fileType = 'ZIP';
+            } else if ($splitWords[$fileLen-1] === 'txt') {
+                $fileType = 'TXT';
+            } else {
+                $fileType = 'ETC';
+            }
+            $row = array_merge(array_slice($row, 0, $fileTypePos), array('file_type' => $fileType), array_slice($row, $fileTypePos));
+        } 
         $log_data[] = $row;
     }
     return $log_data;
