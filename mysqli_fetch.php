@@ -59,17 +59,17 @@ function execute_select_query_for_log($sql_query, $connection) {
                 $fileType =  'SQS';
             } else if ($splitWords[$fileLen-1] === 'vcf') {
                 $fileType = 'VCF';
-            } else if (str_contains($fileNameLower, 'fastqc')) {
+            } else if (strstr($fileNameLower, 'fastqc')) {
             // } else if (splitWords.includes('fastqc', fileLen-1) || splitWords.includes('fastqc', fileLen-2)) {
                 $fileType = 'FASTQC';
             } else if ($splitWords[$fileLen-1] === 'fastq' || $splitWords[$fileLen-2] === 'fastq') {
                 $fileType = 'FASTQ';
-            } else if (str_contains($fileNameLower, 'md5')) {
+            } else if (strstr($fileNameLower, 'md5')) {
             // } else if (splitWords.includes('md5', fileLen-1) || splitWords.includes('md5', fileLen-2)) {
                 $fileType = 'MD5';
-            } else if (str_contains($fileNameLower, 'bam')) {
+            } else if (strstr($fileNameLower, 'bam')) {
                 $fileType = 'BAM';
-            } else if (str_contains($fileNameLower, 'stat') || str_contains($fileNameLower, 'anno')) {
+            } else if (strstr($fileNameLower, 'stat') || strstr($fileNameLower, 'anno')) {
                 $fileType = 'STAT';
             } else if ($splitWords[$fileLen-1] === 'tar') {
                 $fileType = 'TAR';
