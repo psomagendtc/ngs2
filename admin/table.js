@@ -85,6 +85,8 @@ new Vue({
         recordsPerPage: 28,
         data: [],
         totalRows: null,
+        rowIndex: 0,
+        FileTypeColumnName: 'file_type',
         // downloadNotFinished: false,
       };
   },
@@ -92,6 +94,7 @@ new Vue({
       // Getting start date
       var startDate = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate()-92);
       this.sDate = startDate.toISOString().slice(0,10);
+      this.data
       // fetching the first log page
       this.fetchData(this.currentPage, this.sDate, this.today, this.searchType, this.searchField);
     },
@@ -134,6 +137,7 @@ new Vue({
           this.sDate = start;
           this.today = end;
           this.totalPages = Math.ceil(this.totalRows / this.recordsPerPage);
+          this.rowIndex = 0;
           // if (this.downloadNotFinished) {
           //   this.downloadNotFinished = false
           // }
@@ -158,6 +162,7 @@ new Vue({
       previousPage() {
         if (this.currentPage > 1) {
           this.fetchData(this.currentPage -1, this.sDate, this.today, this.searchType, this.searchField);
+
         }
       },
       nextPage() {
@@ -168,33 +173,37 @@ new Vue({
       findFileType(fileName) {
         fileName = fileName.toLowerCase();
         splitWords = fileName.split(".");
-        fileLen = splitWords.length
+        fileLen = splitWords.length;
+        fileType = null;
 
         if (splitWords[fileLen-1] === 'sqs') {
-          return 'SQS';
+          fileType =  'SQS';
         } else if (splitWords[fileLen-1] === 'vcf') {
-          return 'VCF';
+          fileType = 'VCF';
         } else if (fileName.includes('fastqc')) {
         // } else if (splitWords.includes('fastqc', fileLen-1) || splitWords.includes('fastqc', fileLen-2)) {
-          return 'FASTQC';
+          fileType = 'FASTQC';
         } else if (splitWords[fileLen-1] === 'fastq' || splitWords[fileLen-2] === 'fastq') {
-          return 'FASTQ';
+          fileType = 'FASTQ';
         } else if (fileName.includes('md5')) {
         // } else if (splitWords.includes('md5', fileLen-1) || splitWords.includes('md5', fileLen-2)) {
-          return 'MD5';
+          fileType = 'MD5';
         } else if (fileName.includes('bam')) {
-          return 'BAM';
+          fileType = 'BAM';
         } else if (fileName.includes('stat') || fileName.includes('anno')) {
-          return 'STAT';
+          fileType = 'STAT';
         } else if (splitWords[fileLen-1] === 'tar') {
-          return 'TAR';
+          fileType = 'TAR';
         } else if (splitWords[fileLen-1] === 'zip') {
-          return 'ZIP';
+          fileType = 'ZIP';
         } else if (splitWords[fileLen-1] === 'txt') {
-          return 'TXT';
+          fileType = 'TXT';
         } else {
-          return 'ETC';
+          fileType = 'ETC';
         }
+        this.$set(this.data[this.rowIndex], this.FileTypeColumnName, fileType);
+        this.rowIndex = this.rowIndex + 1;
+        return fileType;
       // searchDownloadNotFinished() {
       //   if (this.downloadNotFinished) {
       //     this.fetchData(this.currentPage, this.sDate, '', this.searchType, this.searchField)
@@ -214,6 +223,8 @@ new Vue({
       },
       convertToCSV(jsonData) {
         keys = Object.keys(jsonData[0]);
+        keys.splice(5,2)
+        keys.splice(4,0, this.FileTypeColumnName)
         header = keys.join(",");
         body = jsonData
           .map(row => {
