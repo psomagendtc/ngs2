@@ -55,7 +55,7 @@ new Vue({
                 <td>{{ row.order_id }}</td>
                 <td>{{ row.sample_name }}</td>
                 <td>{{ row.file_name }}</td>
-                <td>{{ findFileType(row.file_name) }}</td>
+                <td>{{ row.file_type }}</td>
                 <td>{{ row.start_timestamp }}</td>
                 <!-- <td>{{ row.finish_timestamp }}</td> -->
               </tr> 
@@ -84,9 +84,8 @@ new Vue({
         totalPages: null,
         recordsPerPage: 28,
         data: [],
+        exportData: [],
         totalRows: null,
-        rowIndex: 0,
-        FileTypeColumnName: 'file_type',
         // downloadNotFinished: false,
       };
   },
@@ -137,7 +136,6 @@ new Vue({
           this.sDate = start;
           this.today = end;
           this.totalPages = Math.ceil(this.totalRows / this.recordsPerPage);
-          this.rowIndex = 0;
           // if (this.downloadNotFinished) {
           //   this.downloadNotFinished = false
           // }
@@ -154,7 +152,7 @@ new Vue({
       },
       search() {
         if (this.searchValid) {
-          this.fetchData(1, this.sDate, this.today, this.searchType, this.searchField);        
+          this.fetchData(1, this.sDate, this.today, this.searchType, this.searchField);
         } else {
           alert('Search more than 3 characters')
         }
@@ -170,40 +168,6 @@ new Vue({
           this.fetchData(this.currentPage + 1, this.sDate, this.today, this.searchType, this.searchField);
         }
       },
-      findFileType(fileName) {
-        fileName = fileName.toLowerCase();
-        splitWords = fileName.split(".");
-        fileLen = splitWords.length;
-        fileType = null;
-
-        if (splitWords[fileLen-1] === 'sqs') {
-          fileType =  'SQS';
-        } else if (splitWords[fileLen-1] === 'vcf') {
-          fileType = 'VCF';
-        } else if (fileName.includes('fastqc')) {
-        // } else if (splitWords.includes('fastqc', fileLen-1) || splitWords.includes('fastqc', fileLen-2)) {
-          fileType = 'FASTQC';
-        } else if (splitWords[fileLen-1] === 'fastq' || splitWords[fileLen-2] === 'fastq') {
-          fileType = 'FASTQ';
-        } else if (fileName.includes('md5')) {
-        // } else if (splitWords.includes('md5', fileLen-1) || splitWords.includes('md5', fileLen-2)) {
-          fileType = 'MD5';
-        } else if (fileName.includes('bam')) {
-          fileType = 'BAM';
-        } else if (fileName.includes('stat') || fileName.includes('anno')) {
-          fileType = 'STAT';
-        } else if (splitWords[fileLen-1] === 'tar') {
-          fileType = 'TAR';
-        } else if (splitWords[fileLen-1] === 'zip') {
-          fileType = 'ZIP';
-        } else if (splitWords[fileLen-1] === 'txt') {
-          fileType = 'TXT';
-        } else {
-          fileType = 'ETC';
-        }
-        this.$set(this.data[this.rowIndex], this.FileTypeColumnName, fileType);
-        this.rowIndex = this.rowIndex + 1;
-        return fileType;
       // searchDownloadNotFinished() {
       //   if (this.downloadNotFinished) {
       //     this.fetchData(this.currentPage, this.sDate, '', this.searchType, this.searchField)
@@ -211,9 +175,17 @@ new Vue({
       //     alert(downloadNotFinished)
       //     this.fetchData(this.currentPage, this.sDate, this.today, this.searchType, this.searchField)
       //   } 
-      },
-      exportToCSV() {
-        csvData = this.convertToCSV(this.data)
+      // },
+      async exportToCSV() {
+        // Getting all filtered data
+        try {
+          this.exportData = await (await fetch(`getlog.php?page=0&start=${this.sDate}&end=${this.today}&type=${this.searchType}&field=${this.searchField}&export=true`)).json();
+        } catch (error) {
+          // alert('Error')
+          console.error(error);
+        }
+        
+        csvData = this.convertToCSV(this.exportData)
         blob = new Blob([csvData], {type: "text/csv"});
         url = URL.createObjectURL(blob);
         link = document.createElement("a");
@@ -223,8 +195,6 @@ new Vue({
       },
       convertToCSV(jsonData) {
         keys = Object.keys(jsonData[0]);
-        keys.splice(5,2)
-        keys.splice(4,0, this.FileTypeColumnName)
         header = keys.join(",");
         body = jsonData
           .map(row => {

@@ -13,6 +13,11 @@ if (isset($_GET['page'])&&isset($_GET['start'])&&isset($_GET['end'])&&isset($_GE
     $searchField = $_GET['field'];
     $searchField = "%".$searchField."%";
 
+    if (isset($_GET['export'])) {
+        $export = $_GET['export'];
+    } else {
+        $export = 'false';
+    }
     $searchDict = array(
         "Order" => "order_id",
         "Sample" => "sample_name",
@@ -23,9 +28,16 @@ if (isset($_GET['page'])&&isset($_GET['start'])&&isset($_GET['end'])&&isset($_GE
         $recordPerPage = 28;
         $offsetValue = ($page - 1) * $recordPerPage;
     }
-
+    // Get all rows for exporting data
+    if ($export === 'true') {
+        $query = sprintf("SELECT `User`.`user_account`, `File`.`order_id`, `File`.`sample_name`, 
+        `File`.`file_name`, `DownloadLog`.`start_timestamp`, `DownloadLog`.`finish_timestamp` FROM `File` 
+        LEFT JOIN `DownloadLog` ON (`File`.`id` = `DownloadLog`.`file_id`) 
+        LEFT JOIN `User` ON (`File`.`user_id` = `User`.`id`) 
+        WHERE `%s` LIKE '%s' AND `start_timestamp` >= '%s' AND `start_timestamp` <= '%s 23:59:59' ORDER BY `start_timestamp` DESC;", 
+        $searchDict[$searchType], $searchField, $startTimestamp, $endTimestamp);
     // Count total rows when endTimestamp is not provided
-    if ($page == 0 && $endTimestamp === '') {
+    } elseif ($page == 0 && $endTimestamp === '') {
         $query = sprintf("SELECT COUNT(`User`.`user_account`) AS count FROM `File` 
         LEFT JOIN `DownloadLog` ON (`File`.`id` = `DownloadLog`.`file_id`) 
         LEFT JOIN `User` ON (`File`.`user_id` = `User`.`id`) 
@@ -61,6 +73,6 @@ if (isset($_GET['page'])&&isset($_GET['start'])&&isset($_GET['end'])&&isset($_GE
 
 // Execute query
 $db = __db_fetch();
-$logData = execute_select_query($query, $db);
+$logData = execute_select_query_for_log($query, $db);
 echo json_encode($logData);
 mysqli_close($db);
