@@ -30,7 +30,16 @@ function fetch_log_download($finish, $insert_id=null, $userAccount=null, $filena
     return $last_insert_index;
 } 
 
-
+function get_user_IP() {
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    return $ip;
+}
 
 /*
 Input Arguments:
@@ -70,8 +79,7 @@ function __fetch_log($log_msg, $additional_argument=null){
     if(! isset($account)){ 
         $account = $_SESSION['user'];
     }
-    $ip = $_SERVER['REMOTE_ADDR']; // IS this IP address correct?
-    $ip = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
+    $ip = get_user_IP(); 
 
     // Eatablish db connection
     $connection = __db_fetch();

@@ -1,5 +1,10 @@
 <?php 
 require('../common.php');
+$allowed_ip = _CONFIGS('ftplog_allowed_ip');
+$ip = get_user_IP();
+if($ip !== $allowed_ip) {
+	error('Inappropriate Attempt', 403);
+}
 ?>
 <!DOCTYPE html>
 <html>
