@@ -37,6 +37,14 @@
 			else $(".__statement").hide();
 		}, 100);
 		</script>
+		<div id="notice" style="position:fixed;left:64px;top:64px;font-size:16px;color:black;text-align:center;width:440px;padding:20px;background-color:#ffff00ef;border:3px solid white;outline:10px solid #ffff0099;">
+			<div style="font-size:24px;font-weight:bold;">Important Notice</div>
+			<div style="font-size:18px;font-weight:bold;margin:20px 0;">Feb 10, 2023<br/>Scheduled maintenance</div>
+			<div>We would like to let you know that there will be a server upgrade from <u style="color:blue;font-weight:bold;">09:00 to 12:00 on February 10, 2023</u>.<br/>Therefore you might experience difficulties to use the website functionalities including "Login" and "Download" during this time.</div>
+			<div style="margin-top:10px;">Thank you for your understanding.</div>
+			<div style="margin-top:10px;font-size:18px;">Psomagen</div>
+			<div style="display:inline-block;color:blue;cursor:pointer;margin-top:20px;" onclick="document.getElementById('notice').remove()">[Close]</div>
+		</div>
 		<div id="mask"></div>
 	</body>
 </html>
