@@ -1,5 +1,11 @@
 <?php 
+//If the HTTPS is not found to be "on"
+if(!isset($_SERVER["HTTPS"]) || $_SERVER["HTTPS"] != "on" ) {
+    header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"], true, 301);
+    exit;
+}
 require('../common.php');
+
 $allowed_ip = _CONFIGS('ftplog_allowed_ip');
 $ip = get_user_IP();
 if($ip !== $allowed_ip) {
