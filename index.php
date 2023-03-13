@@ -44,14 +44,14 @@ require('common.php');
 			else $(".__statement").hide();
 		}, 100);
 		</script>
-		<div id="notice" style="position:fixed;left:64px;top:64px;font-size:16px;color:black;text-align:center;width:440px;padding:20px;background-color:#ffff00ef;border:3px solid white;outline:10px solid #ffff0099;">
+		<!-- <div id="notice" style="position:fixed;left:64px;top:64px;font-size:16px;color:black;text-align:center;width:440px;padding:20px;background-color:#ffff00ef;border:3px solid white;outline:10px solid #ffff0099;">
 			<div style="font-size:24px;font-weight:bold;">Important Notice</div>
 			<div style="font-size:18px;font-weight:bold;margin:20px 0;">Mar 13, 2023<br/>Scheduled maintenance</div>
 			<div>Dear valued users,<br><br>We would like to inform you that a server maintenance is scheduled from <u style="color:blue;font-weight:bold;">15:00 to 19:00 on March 13, 2023 (EST)</u>.<br/>As a result, you may encounter some difficulties in accessing the website functionalities such as "Login" and "Download" during this period.</div>
 			<div style="margin-top:10px;">We apologize for any inconvenience caused and appreciate your understanding.</div>
 			<div style="margin-top:10px;font-size:18px;">Psomagen, Inc.</div>
 			<div style="display:inline-block;color:blue;cursor:pointer;margin-top:20px;" onclick="document.getElementById('notice').remove()">[Close]</div>
-		</div>
+		</div> -->
 		<div id="mask"></div>
 	</body>
 </html>
