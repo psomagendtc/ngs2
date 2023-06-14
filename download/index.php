@@ -65,7 +65,7 @@ if(MC_log){//MC
     fetch_log_download(True, $inserted_id);
 }
 if($linkfilename!==null){
-    unlink($linkfilename);
+    // unlink($linkfilename);
 }
 exit;
 ?>
