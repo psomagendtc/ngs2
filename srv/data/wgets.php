@@ -11,7 +11,8 @@ if(isset($_SESSION['user'])){
         $file_name=basename($filename);
         $link=linkid();
         symlink($filename, _CONFIGS('linkroot').'/'.$link);
-        array_push($output, "wget '"._CONFIGS('urlroot').'/download?id='.urlencode($link)."&method=wget' -O '{$sample_name}_{$file_name}'");
+        # array_push($output, "wget '"._CONFIGS('urlroot').'/download?id='.urlencode($link)."&method=wget' -O '{$sample_name}_{$file_name}'");
+        array_push($output, "wget '"._CONFIGS('urlroot').'/download?id='.urlencode($link)."&method=wget' -O '{$file_name}'");
     }
 }else{
     error('Inappropriate Attempt', 403);

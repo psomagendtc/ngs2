@@ -223,7 +223,8 @@ methods:
 			call("data/makelink", {project, sample, file}, (x)=>{
 				if(x!==undefined&&"link" in x){
 					const link=urlroot+"/download?id="+x.link+"."+file+"&method=wget";
-					const command="wget '"+link+"' -O '"+sample+"_"+file+"'";
+					// const command="wget '"+link+"' -O '"+sample+"_"+file+"'";
+					const command="wget '"+link+"' -O '"+file+"'";
 					var textarea=this.$refs.textarea;
 					textarea.value=command;
 					textarea.select();
