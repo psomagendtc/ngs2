@@ -19,7 +19,7 @@ template:
 			</div>
 			<ul class="projectlist" ref="list">
 				<li class="projectroot" v-for="project in orders">
-					<h2><span>Project</span>{{project.id}} <button @click="seeall($event.target)">⏬ See all list</button> <button @click="hideall($event.target)">⏫ Hide all list</button><span style="font-size:14px"> {{ project.id in samples_extra?samples_extra[project.id].length:0 }} object(s)</span></h2>
+					<h2><span>Project</span>{{project.id}} <button @click="seeall($event.target)">⏬ See all list</button> <button @click="hideall($event.target)">⏫ Hide all list</button><span style="font-size:14px"> {{ samp_list.length }} object(s)</span></h2>
 					<table class="samples" cellspacing="1">
 						<thead>
 							<tr>
@@ -96,7 +96,8 @@ data:
 				{title:"Type", id:"SampleType"}, {title:"Run type", id:"RunningType"}, {title:"Run scale", id:"RunScale"}
 			],
 			resize_t:null,
-			wgets_buffer:{}
+			wgets_buffer:{},
+			samp_list:[]
 		};
 	},
 computed:
@@ -123,6 +124,8 @@ computed:
 						if(!(id in orders&&sample in orders[id])){
 							if(!(id in samples_extra))samples_extra[id]=[];
 							samples_extra[id].push({"SampleID":sample});
+						} else {
+							this.samp_list.push(sample)
 						}
 					}
 				}
