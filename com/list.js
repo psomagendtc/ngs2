@@ -19,7 +19,7 @@ template:
 			</div>
 			<ul class="projectlist" ref="list">
 				<li class="projectroot" v-for="project in orders">
-					<h2><span>Project</span>{{project.id}} <button @click="seeall($event.target)">⏬ See all list</button> <button @click="hideall($event.target)">⏫ Hide all list</button><span style="font-size:14px"> {{ samp_list.length }} object(s)</span></h2>
+					<h2><span>Project</span>{{project.id}} <button @click="seeall($event.target)">⏬ See all list</button> <button @click="hideall($event.target)">⏫ Hide all list</button><span style="font-size:14px"> {{ project.id in sample_list?sample_list[project.id].length:0 }} sample(s)</span></h2>
 					<table class="samples" cellspacing="1">
 						<thead>
 							<tr>
@@ -97,7 +97,7 @@ data:
 			],
 			resize_t:null,
 			wgets_buffer:{},
-			samp_list:[]
+			sample_list:{}
 		};
 	},
 computed:
@@ -110,6 +110,7 @@ computed:
 		},
 		samples_extra:function(){
 			var samples_extra={};
+			var sample_list={};
 			if(this.orders!==null&&this.files!==null){
 				var orders={};
 				this.orders.forEach((project)=>{
@@ -125,11 +126,13 @@ computed:
 							if(!(id in samples_extra))samples_extra[id]=[];
 							samples_extra[id].push({"SampleID":sample});
 						} else {
-							this.samp_list.push(sample)
+							if(!(id in sample_list))sample_list[id]=[];
+							sample_list[id].push({"SampleID":sample});
 						}
 					}
 				}
 			}
+			this.sample_list = sample_list
 			return samples_extra;
 		}
 	},
